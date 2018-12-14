@@ -194,7 +194,7 @@ export const updateOrDeploySkill = async (args, options, logger) => {
 
         try {
           const url = ctx.dir === 'kanzi' ?
-            'https://api.github.com/repos/m0ngr31/kanzi/releases/latest' :
+            'https://api.github.com/repos/sergiensergien/kanzi/releases/latest' :
             'https://api.github.com/repos/m0ngr31/koko/releases/latest';
 
           const request = await axios.request({
@@ -300,9 +300,11 @@ export const updateOrDeploySkill = async (args, options, logger) => {
         const englishObj = _.cloneDeep(origObj);
         const germanObj = _.cloneDeep(origObj);
         const frenchObj = _.cloneDeep(origObj);
+        const spanishObj = _.cloneDeep(origObj);
 
         germanObj.interactionModel.languageModel.intents = getIntents(ctx.dir, 'de');
         englishObj.interactionModel.languageModel.intents = getIntents(ctx.dir, 'en');
+        spanishObj.interactionModel.languageModel.intents = getIntents(ctx.dir, 'es');
 
         if (isKanzi) {
           frenchObj.interactionModel.languageModel.intents = getIntents(ctx.dir, 'fr');
@@ -315,6 +317,7 @@ export const updateOrDeploySkill = async (args, options, logger) => {
         fse.removeSync(`${ctx.dir}/models/en-AU.json`);
         fse.removeSync(`${ctx.dir}/models/de-DE.json`);
         fse.removeSync(`${ctx.dir}/models/fr-FR.json`);
+        fse.removeSync(`${ctx.dir}/models/es-ES.json`);
 
         fse.writeJsonSync(`${ctx.dir}/models/en-US.json`, englishObj, jsonOptions);
         fse.writeJsonSync(`${ctx.dir}/models/en-GB.json`, englishObj, jsonOptions);
@@ -322,6 +325,7 @@ export const updateOrDeploySkill = async (args, options, logger) => {
         fse.writeJsonSync(`${ctx.dir}/models/en-IN.json`, englishObj, jsonOptions);
         fse.writeJsonSync(`${ctx.dir}/models/en-AU.json`, englishObj, jsonOptions);
         fse.writeJsonSync(`${ctx.dir}/models/de-DE.json`, germanObj, jsonOptions);
+        fse.writeJsonSync(`${ctx.dir}/models/es-ES.json`, spanishObj, jsonOptions);
 
         if (isKanzi) {
           fse.writeJsonSync(`${ctx.dir}/models/fr-FR.json`, frenchObj, jsonOptions);
@@ -398,7 +402,7 @@ export const generateZip = (args, options, logger) => {
 
         try {
           const url = ctx.dir === 'kanzi' ?
-            'https://api.github.com/repos/m0ngr31/kanzi/releases/latest' :
+            'https://api.github.com/repos/sergiensergien/kanzi/releases/latest' :
             'https://api.github.com/repos/m0ngr31/koko/releases/latest';
 
           const request = await axios.request({
